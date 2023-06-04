@@ -1,8 +1,7 @@
-from mega import Mega
+from mega import *
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urlunparse
-import urllib.parse
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 
