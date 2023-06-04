@@ -1,12 +1,12 @@
-from mega import *
+from mega import Mega
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urlunparse
+import urllib.parse
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 
-
-def getMegaLink(url):
+def getRedirectedLink(url):
     if len(url) < 5:
         return ""
 
@@ -28,14 +28,14 @@ def getMegaLink(url):
     return final_link
 
 
-
-def getLinks(x, url):
+def getLinks(from_episode, to_episode, url):
     mega_links = []
 
     temp = url.split("1", 1)
-    x = int(x)
+    from_episode = int(from_episode)
+    to_episode = int(to_episode)
 
-    for i in range(1, x + 1):
+    for i in range(from_episode, to_episode + 1):
 
         temp = url.split("1", 1)
         website_url = temp[0] + str(i) + temp[1]
@@ -48,7 +48,6 @@ def getLinks(x, url):
         # Find all elements with class "Button STPb"
         elements = soup.find_all(class_="Button STPb")
 
-
         # Iterate through each element
         for element in elements:
             # Get the href attribute value
@@ -57,7 +56,7 @@ def getLinks(x, url):
             # Parse the URL
             parsed_url = urlparse(href)
 
-            temp = getMegaLink(urlunparse(parsed_url))
+            temp = getRedirectedLink(urlunparse(parsed_url))
 
             parsed_url = urlparse(temp)
 
@@ -86,9 +85,10 @@ def addLinksToAccount(mega_links):
 
 
 def main():
-    num = input("number of episodes: ")
-    link = input("first episode link: ")
-    addLinksToAccount(getLinks(num, link))
+    from_episode = input("from episode: ")
+    to_episode = input("to episode: ")
+    url = urllib.parse.unquote(input("first episode link: "))
+    addLinksToAccount(getLinks(from_episode, to_episode, url))
 
 
 if __name__ == '__main__':
