@@ -1,3 +1,5 @@
+import urllib
+
 from mega import *
 import requests
 from bs4 import BeautifulSoup
@@ -73,13 +75,13 @@ def addLinksToAccount(mega_links):
     mega_password = input("password: ")
 
     # Initialize Mega client
-    mega = Mega()
+    mg = Mega()
 
     # Login to Mega
-    mega.login(mega_email, mega_password)
+    mg.login(mega_email, mega_password)
 
     for link in mega_links:
-        mega.import_public_url(link)
+        mg.import_public_url(link)
         print(f"Imported {link} to Mega.")
 
 
