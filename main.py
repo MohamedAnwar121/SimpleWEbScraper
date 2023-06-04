@@ -1,7 +1,6 @@
-import urllib
-
-from mega import *
+from mega import Mega
 import requests
+import urllib.parse
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urlunparse
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -37,7 +36,6 @@ def getLinks(from_episode, to_episode, url):
     to_episode = int(to_episode)
 
     for i in range(from_episode, to_episode + 1):
-
         temp = url.split("1", 1)
         website_url = temp[0] + str(i) + temp[1]
 
